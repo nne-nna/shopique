@@ -1,0 +1,16 @@
+/* Override default slick-slider styles */
+.slick-slide > div {
+    margin: 0 8px;
+}
+
+.slick-list {
+    margin: 0 -8px;
+}
+
+/* Hide default slick arrows */
+.slick-prev:before,
+.slick-next:before {
+    display: none;
+}
+
+

@@ -5,6 +5,7 @@ import BestSeller from '../components/BestSeller'
 import OurPolicy from '../components/OurPolicy'
 import NewsLetterBox from '../components/NewsLetterBox'
 import Categories from '../components/Categories'
+import TopDeals from '../components/TopDeals'
 
 const Home = () => {
   return (

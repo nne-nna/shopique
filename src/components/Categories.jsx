@@ -6,22 +6,22 @@ const Categories = () => {
     { 
       name: 'Clothes', 
       image: assets.category_clothes,
-      bgColor: 'bg-blue-500/90' // Vibrant blue
+      bgColor: 'bg-yellow-500' 
     },
     { 
       name: 'Bags', 
       image: assets.category_bags,
-      bgColor: 'bg-yellow-500/90' // Warm yellow
+      bgColor: 'bg-teal-400'
     },
     { 
       name: 'Shoes', 
       image: assets.category_shoes,
-      bgColor: 'bg-purple-500/90' // Rich purple
+      bgColor: 'bg-orange-500'
     },
     { 
-      name: 'Makeup', 
+      name: 'Accessories', 
       image: assets.category_makeup,
-      bgColor: 'bg-pink-500/90' // Soft pink
+      bgColor: 'bg-indigo-500'
     }
   ];
 
@@ -37,20 +37,17 @@ const Categories = () => {
             key={index}
             className={`group relative overflow-hidden rounded-2xl cursor-pointer hover:shadow-xl transition-all duration-300 ${category.bgColor}`}
           >
-            {/* Image container with overlay */}
             <div className="aspect-[4/5] relative">
               <img 
                 src={category.image} 
                 alt={category.name}
-                className="w-full h-full object-cover mix-blend-overlay transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
               />
-              {/* Subtle gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
             
-            {/* Category name */}
-            <div className="absolute bottom-0 left-0 right-0 p-4">
-              <h3 className="text-white text-xl font-medium drop-shadow-lg">
+            {/* Category name with semi-transparent background */}
+            <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm p-4">
+              <h3 className="text-white text-xl font-medium">
                 {category.name}
               </h3>
             </div>
