@@ -81,14 +81,28 @@ import support_img from './support_img.png'
 import menu_icon from './menu_icon.png'
 import about_img from './about_img.png'
 import contact_img from './contact_img.png'
-import razorpay_logo from './razorpay_logo.png'
-import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import category_clothes from './cloth-category.png'
 import category_bags from './bag-category.png'
 import category_makeup from './makeup-category.png'
 import category_shoes from './shoe-category.png'
 import deals_banner from './deals_banner.png'
+import cashBack_Image from './cashBack_Image.jpg'
+import faqImage from './faqImage.png'
+import paymentImage from './paymentImage.png'
+import deliveryImage from './deliveryImage.png'
+import newsletterImage from './newsletterImage.png'
+import applepay from './applepay_logo.png'
+import amazon_logo from './amazon_logo.png'
+import mastercard_logo from './mastercard_logo.png'
+import googlepay_logo from './googlepay_logo.png'
+import stripe_logo from './stripe_logo.png'
+import visa_logo from'./visa_logo.png'
+import paypal_logo from './paypal_logo.png'
+import seller_icon from './seller_icon.png'
+import gift_icon from './gift_icon.png'
+import help_icon from './help_icon.png'
+
 
 export const assets = {
     logo,
@@ -106,14 +120,27 @@ export const assets = {
     menu_icon,
     about_img,
     contact_img,
-    razorpay_logo,
     stripe_logo,
     cross_icon, 
     category_clothes,
     category_bags,
     category_makeup,
     category_shoes,
-    deals_banner
+    deals_banner,
+    cashBack_Image, 
+    faqImage,
+    paymentImage,
+    deliveryImage,
+    newsletterImage,
+    visa_logo,
+    applepay,
+    mastercard_logo,
+    paypal_logo,
+    amazon_logo,
+    googlepay_logo,
+    seller_icon,
+    gift_icon,
+    help_icon
 }
 
 export const products = [

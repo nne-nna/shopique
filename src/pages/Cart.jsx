@@ -28,7 +28,7 @@ const Cart = () => {
   },[cartItems])
 
   return (
-    <div className='border-t pt-14'>
+    <div className='max-w-[1200px] mx-auto px-4 py-16 border-t pt-14'>
 
       <div className='text-2xl mb-3'>
         <Title 
@@ -74,7 +74,7 @@ const Cart = () => {
           <div className='w-full sm:w-[450px]'>
               <TotalCart />
               <div className='w-full text-end'>
-                  <button onClick={()=>navigate('/place-order')} className='bg-black text-white text-sm my-8 px-8 py-3'>PROCEED TO CHECKOUT</button>
+                  <button onClick={()=>navigate('/place-order')} className='bg-green-800 text-white text-sm my-8 px-8 py-3'>PROCEED TO CHECKOUT</button>
               </div>
           </div>
       </div>

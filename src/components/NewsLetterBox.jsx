@@ -1,30 +1,42 @@
-import React from 'react'
+import React from 'react';
+import { assets } from '../assets/assets'; 
 
 const NewsLetterBox = () => {
+    return (
+        <div className="bg-gray-100 py-8">
+            <div className="max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-center gap-6">
+                {/* Left Section: Text + Input Box */}
+                <div className="flex-1">
+                    <h2 className="text-2xl md:text-3xl font-bold text-black mb-3">
+                        Stay Updated with Our Newsletter
+                    </h2>
+                    <p className="text-gray-600 mb-4">
+                        Subscribe to receive updates on exclusive offers, new products, and more!
+                    </p>
+                    <div className="flex items-center gap-3">
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="w-full max-w-sm p-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                        />
+                        <button className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
 
-    const onSubmitHandler = (event) => {
-        event.preventDefault();
-    }
+                {/* Right Section: Image */}
+                <div className="flex-1 flex items-center justify-center">
+                    <img
+                        src={assets.newsletterImage}
+                        alt="Newsletter Visual"
+                        className="max-w-[300px] lg:max-w-[400px] rounded-md"
+                    />
+                </div>
+            </div>
+        </div>
+    );
+};
 
-  return (
-    <div className='text-center'>
-        <p className='text-2xl font-medium text-gray-800'>Sign up and enjoy 20% off your first purchase!</p>
-        <p className='text-gray-400 mt-3'>
-            Stay ahead in the world of technology with Gadgety! Be the first to discover our latest arrivals, exclusive offers, and expert 
-            tips to enhance your tech experience. Whether you're a gadget enthusiast or looking for the perfect device, our newsletter keeps 
-            you informed and inspired. Subscribe now and never miss an update!
-        </p>
-        <form onSubmit={onSubmitHandler} className='w-full sm:w-1/2 flex items-center gap-3 mx-auto my-6 border pl-3'>
-            <input 
-                className='w-full sm:flex-1 outline-none'
-                type='0email'
-                placeholder='Enter your email'
-                required
-            />
-            <button type='submit' className='bg-black text-white text-xs px-10 py-4'>SUBSCRIBE</button>
-        </form>
-    </div>
-  )
-}
+export default NewsLetterBox;
 
-export default NewsLetterBox

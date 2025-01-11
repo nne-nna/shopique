@@ -4,13 +4,12 @@ import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { FiChevronDown } from 'react-icons/fi';
-
+import SearchBar from "../context/SearchBar"; // Add this import
 
 const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const { getCartCount } = useContext(ShopContext);
 
   useEffect(() => {
@@ -28,12 +27,6 @@ const Nav = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    // Implement search functionality here
-    console.log("Searching for:", searchTerm);
-  };
 
   return (
     <div>
@@ -54,32 +47,32 @@ const Nav = () => {
 
             {/* Nav Items */}
             <ul className="hidden sm:flex gap-10 text- text-gray-700 items-center">
-            <li
-              className="relative cursor-pointer flex items-center gap-1 z-50"
-              onMouseEnter={() => setShowCategories(true)}
-              onMouseLeave={() => setShowCategories(false)}
-            >
-              <p>Categories</p>
-              <FiChevronDown size={16} className="text-gray-500" />
-              {showCategories && (
-                <div className="absolute top-full left-0 w-40 bg-white shadow-lg rounded-md mt-2">
-                  <ul className="flex flex-col">
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      Clothes
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      Bags
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      Accessories
-                    </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                      Shoes
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </li>
+              <li
+                className="relative cursor-pointer flex items-center gap-1 z-50"
+                onMouseEnter={() => setShowCategories(true)}
+                onMouseLeave={() => setShowCategories(false)}
+              >
+                <p>Categories</p>
+                <FiChevronDown size={16} className="text-gray-500" />
+                {showCategories && (
+                  <div className="absolute top-full left-0 w-40 bg-white shadow-lg rounded-md mt-2">
+                    <ul className="flex flex-col">
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        Clothes
+                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        Bags
+                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        Accessories
+                      </li>
+                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        Shoes
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </li>
 
               <NavLink to="/deals" className="flex items-center">
                 Deals
@@ -95,21 +88,9 @@ const Nav = () => {
 
           <div className="flex items-center gap-8">
             {/* Search Bar */}
-            <form onSubmit={handleSearch} className="hidden sm:flex items-center relative">
-              <input
-                type="text"
-                placeholder="Search Product..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="border border-gray-300 rounded-full px-4 py-1 text-sm focus:outline-none focus:ring focus:ring-gray-200 pr-10"
-              />
-              <img
-                src={assets.search_icon}
-                alt="Search"
-                className="absolute right-3 top-2.5 w-4 h-4"
-              />
-            </form>
-
+            <div className="hidden sm:block">
+              <SearchBar />
+            </div>
 
             <Link to="/login">
               <img

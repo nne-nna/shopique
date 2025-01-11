@@ -11,7 +11,7 @@ const PlaceOrder = () => {
     const {navigate} = useContext(ShopContext);
 
   return (
-    <div className='flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
+    <div className='max-w-[1200px] mx-auto px-4 py-16 flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
         {/* LEFT SIDE */}
         <div className='flex flex-col gap-4 w-full sm:max-w-[480px]'>
             <div className='text-xl sm:text-2xl my-3'>
@@ -109,7 +109,7 @@ const PlaceOrder = () => {
             </div>
 
             <div className='w-full text-end mt-8'>
-              <button onClick={()=>navigate('/orders')} className='bg-black text-white px-16 py-3 text-sm'>PLACE ORDER</button>
+              <button onClick={()=>navigate('/orders')} className='bg-green-800 text-white px-16 py-3 text-sm'>PLACE ORDER</button>
               
             </div>
 

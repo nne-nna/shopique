@@ -4,6 +4,7 @@ import ProductItem from './ProductItem';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { TrendingUp } from 'lucide-react'; // Import for trending icon
 
 const BestSeller = () => {
     const {products} = useContext(ShopContext);
@@ -19,9 +20,9 @@ const BestSeller = () => {
         infinite: false,
         speed: 500,
         slidesToShow: 5,
-        slidesToScroll: 5, // Changed to scroll all visible slides at once
-        arrows: false, // Remove arrows
-        dotsClass: "slick-dots slick-thumb", // Custom dots class
+        slidesToScroll: 5,
+        arrows: false,
+        dotsClass: "custom-dots",
         responsive: [
             {
                 breakpoint: 1280,
@@ -55,31 +56,83 @@ const BestSeller = () => {
     };
 
     return (
-        <div className='max-w-[1200px] mx-auto px-8 py-10'>
-            <h1 className='text-3xl font-semibold mb-6'>
-                Today's Best Deals For You!
-            </h1>
+        <div className='relative bg-gradient-to-b from-white via-gray-50 to-white'>
+            <div className='max-w-[1200px] mx-auto px-8 py-8'>
+                {/* Enhanced Header Section */}
+                <div className='mb-12 relative'>
+                    <h1 className='text-3xl md:text-4xl font-semibold mb-4'>
+                        Discover Our Best Sellers!
+                    </h1>
+                    <p className='text-gray-600 text-lg max-w-2xl'>
+                        Explore the most popular products loved by our customers. Handpicked just for you!
+                    </p>
+                    
+                    {/* Decorative Elements */}
+                    <div className='absolute right-0 top-0 w-24 h-24 bg-green-50 rounded-full -z-10 blur-2xl'></div>
+                    <div className='absolute right-20 top-10 w-16 h-16 bg-yellow-50 rounded-full -z-10 blur-xl'></div>
+                </div>
 
-            <div className='relative'>
-                <Slider {...settings}>
-                    {bestSeller.map((item, index) => (
-                        <div key={index} className='px-2'>
-                            <div className='bg-white p-4 rounded-lg'>
-                                <ProductItem 
-                                    id={item._id}
-                                    name={item.name}
-                                    image={item.image} 
-                                    price={item.price}
-                                    rating={item.rating}
-                                    purchases={item.purchases}
-                                />
+                {/* Enhanced Slider Section */}
+                <div className='relative'>
+                    <style>
+                        {`
+                            .custom-dots {
+                                display: flex !important;
+                                justify-content: center;
+                                align-items: center;
+                                margin-top: 2rem;
+                                gap: 8px;
+                            }
+
+                            .custom-dots li {
+                                list-style: none;
+                                cursor: pointer;
+                                width: 80px;
+                                height: 8px;
+                            }
+
+                            .custom-dots li button {
+                                width: 100%;
+                                height: 100%;
+                                padding: 0;
+                                border: none;
+                                background: #e5e7eb;
+                                border-radius: 4px;
+                                text-indent: -9999px;
+                                transition: all 0.3s ease;
+                            }
+
+                            .custom-dots li.slick-active button {
+                                background: #166534;
+                            }
+
+                            .custom-dots li button:hover {
+                                background: #166534;
+                                opacity: 0.7;
+                            }
+                        `}
+                    </style>
+
+                    <Slider {...settings}>
+                        {bestSeller.map((item, index) => (
+                            <div key={index} className='px-3'>
+                                <div className='bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300'>
+                                    <ProductItem 
+                                        id={item._id}
+                                        name={item.name}
+                                        image={item.image} 
+                                        price={item.price}
+                                        rating={item.rating}
+                                        purchases={item.purchases}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </Slider>
+                        ))}
+                    </Slider>
+                </div>
             </div>
         </div>
     );
 };
 
-export default BestSeller;;
+export default BestSeller;

@@ -1,55 +1,97 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from './ShopContext'
+import React, { useState, useContext, useRef, useEffect } from 'react';
+import { ShopContext } from './ShopContext';
 import { assets } from '../assets/assets';
-import { useLocation } from 'react-router-dom';
 
 const SearchBar = () => {
-    const { search, setSearch, showSearch, setShowSearch} = useContext(ShopContext);
-    const [visible, setVisible] = useState(false);
-    const [showAlert, setShowAlert] = useState(false);
-    const location = useLocation();
+  const { products, navigate } = useContext(ShopContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const dropdownRef = useRef(null);
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
 
-    useEffect(() => {
-        if (location.pathname.includes('collection')) {
-            setVisible(true);
-            setShowAlert(false);
-        } else {
-            setVisible(false);
-            if (showSearch) {
-                setShowAlert(true);
-                setShowSearch(false);
-                setTimeout(() => setShowAlert(false), 3000);
-            }
-        }
-    }, [location, showSearch]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-    return (
-        <>
-            {showAlert && (
-                <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-4 z-50 border border-gray-200 w-auto max-w-md">
-                    <p className="text-gray-700 text-sm">
-                        Please navigate to the Collections page to use the search feature
-                    </p>
-                </div>
-            )}
-            
-            {showSearch && visible && (
-                <div className='border-t border-b bg-gray-50 text-center'>
-                    <div className='inline-flex items-center justify-center border border-gray-400 px-5 py-2 my-5 mx-3 rounded-full w-3/4 sm:w-1/2'>
-                        <input 
-                            value={search}
-                            onChange={(e)=>setSearch(e.target.value)}
-                            className='flex-1 outline-none bg-inherit text-sm'
-                            type="text"
-                            placeholder='Search'
-                        />
-                        <img className='w-4' src={assets.search_icon} alt="" />
-                    </div>
-                    <img onClick={() => setShowSearch(false)} className='inline w-3 cursor-pointer' src={assets.cross_icon} alt="" />
-                </div>
-            )}
-        </>
-    );
-}
+  // Filter products based on search term
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+    
+    if (value.trim() === '') {
+      setFilteredProducts([]);
+      setShowDropdown(false);
+      return;
+    }
 
-export default SearchBar
+    const filtered = products
+      .filter(product => 
+        product.name.toLowerCase().includes(value.toLowerCase()) ||
+        product.category.toLowerCase().includes(value.toLowerCase())
+      )
+      .slice(0, 6); // Limit to 6 results
+
+    setFilteredProducts(filtered);
+    setShowDropdown(true);
+  };
+
+  // Handle product selection
+  const handleProductSelect = (productId) => {
+    setSearchTerm('');
+    setShowDropdown(false);
+    navigate(`/product/${productId}`);
+  };
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <form onSubmit={(e) => e.preventDefault()} className="flex items-center">
+        <input
+          type="text"
+          placeholder="Search Product..."
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
+          className="border border-gray-300 rounded-full px-4 py-1 text-sm focus:outline-none focus:ring focus:ring-gray-200 pr-10 w-full"
+        />
+        <img
+          src={assets.search_icon}
+          alt="Search"
+          className="absolute right-3 top-2.5 w-4 h-4"
+        />
+      </form>
+
+      {showDropdown && filteredProducts.length > 0 && (
+        <div
+          className="absolute mt-2 bg-white rounded-lg shadow-lg border border-gray-00 z-50"
+          style={{ width: '300px' }} // Increased the width here
+        >
+          {filteredProducts.map((product) => (
+            <div
+              key={product._id}
+              onClick={() => handleProductSelect(product._id)}
+              className="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+            >
+              <img 
+                src={product.image} 
+                alt={product.name}
+                className="w-10 h-10 object-cover rounded"
+              />
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-800">{product.name}</p>
+                <p className="text-xs text-gray-500">{product.category}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SearchBar;
