@@ -3,23 +3,16 @@ import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { FiChevronDown } from 'react-icons/fi';
-import SearchBar from "../context/SearchBar"; // Add this import
-
+import SearchBar from "../context/SearchBar";
 
 const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [showCategories, setShowCategories] = useState(false);
   const { getCartCount } = useContext(ShopContext);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -47,38 +40,35 @@ const Nav = () => {
             </Link>
 
             {/* Nav Items */}
-            <ul className="hidden sm:flex gap-10 text- text-gray-700 items-center">
-              <li
-                className="relative cursor-pointer flex items-center gap-1 z-50"
-                onMouseEnter={() => setShowCategories(true)}
-                onMouseLeave={() => setShowCategories(false)}
+            <ul className="hidden sm:flex gap-10 text-gray-700 items-center">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center px-4 py-1.5 bg-green-800 text-white rounded-md"
+                    : "flex items-center hover:text-green-800"
+                }
               >
-                <p>Categories</p>
-                <FiChevronDown size={16} className="text-gray-500" />
-                {showCategories && (
-                  <div className="absolute top-full left-0 w-40 bg-white shadow-lg rounded-md mt-2">
-                    <ul className="flex flex-col">
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                        Clothes
-                      </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                        Bags
-                      </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                        Accessories
-                      </li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                        Shoes
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </li>
-
-              <NavLink to="/deals" className="flex items-center">
+                Home
+              </NavLink>
+              <NavLink
+                to="/deals"
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center px-4 py-1.5 bg-green-800 text-white rounded-md"
+                    : "flex items-center hover:text-green-800"
+                }
+              >
                 Shop
               </NavLink>
-              <NavLink to="/place-order" className="flex items-center">
+              <NavLink
+                to="/place-order"
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center px-4 py-1.5 bg-green-800 text-white rounded-md"
+                    : "flex items-center hover:text-green-800"
+                }
+              >
                 Delivery
               </NavLink>
             </ul>
@@ -129,29 +119,45 @@ const Nav = () => {
           </div>
           <NavLink
             onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
-            to="/categories"
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-4 py-2 bg-green-800 text-white rounded-md"
+                  : "flex items-center hover:text-green-800"
+            }
           >
-            Categories
+            Home
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
             to="/deals"
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-4 py-2 bg-green-800 text-white rounded-md"
+                  : "flex items-center hover:text-green-800"
+            }
           >
             Deals
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
             to="/whats-new"
+            className={({ isActive }) =>
+              isActive
+                ? "flex items-center px-4 py-2 bg-green-800 text-white rounded-md"
+                  : "flex items-center hover:text-green-800"
+            }
           >
             What's New
           </NavLink>
           <NavLink
             onClick={() => setVisible(false)}
-            className="py-2 pl-6 border"
             to="/delivery"
+            className={({ isActive }) =>
+              isActive
+                ? "py-2 pl-6 px-4 bg-orange-600 text-white rounded-md"
+                : "py-2 pl-6 hover:text-orange-600"
+            }
           >
             Delivery
           </NavLink>
@@ -162,4 +168,3 @@ const Nav = () => {
 };
 
 export default Nav;
-

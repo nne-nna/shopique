@@ -3,7 +3,7 @@ import { ShopContext } from './ShopContext';
 import { assets } from '../assets/assets';
 
 const SearchBar = () => {
-  const { products, navigate } = useContext(ShopContext);
+  const { products = [], navigate } = useContext(ShopContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -25,25 +25,38 @@ const SearchBar = () => {
   const handleSearch = (value) => {
     setSearchTerm(value);
     
-    if (value.trim() === '') {
+    if (!value || value.trim() === '') {
       setFilteredProducts([]);
       setShowDropdown(false);
       return;
     }
 
+    if (!Array.isArray(products)) {
+      setFilteredProducts([]);
+      return;
+    }
+
     const filtered = products
-      .filter(product => 
-        product.name.toLowerCase().includes(value.toLowerCase()) ||
-        product.category.toLowerCase().includes(value.toLowerCase())
-      )
+      .filter(product => {
+        if (!product) return false;
+        
+        const productName = product?.name || '';
+        const productCategory = product?.category || '';
+        const searchLower = value.toLowerCase();
+        
+        return productName.toLowerCase().includes(searchLower) ||
+               productCategory.toLowerCase().includes(searchLower);
+      })
       .slice(0, 6); // Limit to 6 results
 
     setFilteredProducts(filtered);
-    setShowDropdown(true);
+    setShowDropdown(filtered.length > 0);
   };
 
   // Handle product selection
   const handleProductSelect = (productId) => {
+    if (!productId) return;
+    
     setSearchTerm('');
     setShowDropdown(false);
     navigate(`/product/${productId}`);
@@ -68,26 +81,32 @@ const SearchBar = () => {
 
       {showDropdown && filteredProducts.length > 0 && (
         <div
-          className="absolute mt-2 bg-white rounded-lg shadow-lg border border-gray-00 z-50"
-          style={{ width: '300px' }} // Increased the width here
+          className="absolute mt-2 w-[300px] bg-white rounded-lg shadow-lg border border-gray-200 z-50"
         >
-          {filteredProducts.map((product) => (
-            <div
-              key={product._id}
-              onClick={() => handleProductSelect(product._id)}
-              className="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
-            >
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className="w-10 h-10 object-cover rounded"
-              />
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-800">{product.name}</p>
-                <p className="text-xs text-gray-500">{product.category}</p>
+          {filteredProducts.map((product) => {
+            if (!product?._id || !product?.name) return null;
+            
+            return (
+              <div
+                key={product._id}
+                onClick={() => handleProductSelect(product._id)}
+                className="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+              >
+                <img 
+                  src={product.image || assets.placeholder_image} // Add a placeholder image in your assets
+                  alt={product.name}
+                  className="w-10 h-10 object-cover rounded"
+                  onError={(e) => {
+                    e.target.src = assets.placeholder_image; // Fallback for broken images
+                  }}
+                />
+                <div className="ml-3">
+                  <p className="text-sm font-medium text-gray-800">{product.name}</p>
+                  <p className="text-xs text-gray-500">{product.category || 'Uncategorized'}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
