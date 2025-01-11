@@ -6,6 +6,7 @@ import { ShopContext } from "../context/ShopContext";
 import { FiChevronDown } from 'react-icons/fi';
 import SearchBar from "../context/SearchBar"; // Add this import
 
+
 const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -75,12 +76,9 @@ const Nav = () => {
               </li>
 
               <NavLink to="/deals" className="flex items-center">
-                Deals
+                Shop
               </NavLink>
-              <NavLink to="/whats-new" className="flex items-center">
-                What's New
-              </NavLink>
-              <NavLink to="/delivery" className="flex items-center">
+              <NavLink to="/place-order" className="flex items-center">
                 Delivery
               </NavLink>
             </ul>

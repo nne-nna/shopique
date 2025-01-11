@@ -162,7 +162,7 @@ const Product = () => {
             disabled={!size}
             className={`w-full lg:w-auto px-8 py-3 rounded-md text-white text-lg
               ${size 
-                ? 'bg-green-800 hover:bg-gray-800 active:bg-gray-700' 
+                ? 'bg-green-800 hover:bg-green-700 hover:scale-105 active:bg-green-600' 
                 : 'bg-gray-300 cursor-not-allowed'
               }`}
           >

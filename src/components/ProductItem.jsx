@@ -9,7 +9,7 @@ const ProductItem = ({id, image, name, price, rating, purchases}) => {
 
     const handleAddToCart = (e) => {
         e.preventDefault();
-        addToCart(id, 'default');
+        addToCart(id, 'S');
     }
 
     return (

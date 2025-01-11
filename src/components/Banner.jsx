@@ -1,5 +1,6 @@
 import React from 'react'
 import { assets } from '../assets/assets';
+import { ArrowDown } from 'lucide-react';
 
 const Banner = () => {
   return (
@@ -8,18 +9,18 @@ const Banner = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Text Content */}
           <div className="text-white space-y-4 z-10">
-            <h1 className="text-3xl sm:text-4xl font-bold">
-              Exclusive Deals & Discounts
-            </h1>
-            <p className="text-green-100 text-sm sm:text-base max-w-xl">
-              Discover incredible savings on top-quality products. From trending electronics 
-              to must-have accessories, find the best deals handpicked just for you. 
-              Don't miss out on these limited-time offers!
-            </p>
-            <button className="bg-white text-green-800 px-6 py-2 rounded-full 
-                           font-medium hover:bg-green-100 transition-colors">
+          <h1 className="text-3xl sm:text-4xl font-bold">
+            Shop the Latest Trends
+          </h1>
+          <p className="text-green-100 text-sm sm:text-base max-w-xl">
+            Explore our curated collection of top-quality products. From stylish apparel to essential accessories, 
+            find everything you need in one place. Start shopping now and elevate your wardrobe and lifestyle!
+          </p>
+
+          <button className="px-8 py-3 bg-green-500 text-white text-sm sm:text-base rounded-lg hover:bg-green-400 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg">
               Shop Now
-            </button>
+              <ArrowDown className="w-4 h-4" />
+          </button>
           </div>
 
           {/* Image */}
@@ -27,7 +28,7 @@ const Banner = () => {
             <img
               src={assets.deals_banner}
               alt="Deals Banner"
-              className="absolute inset-0 w-full h-full object-cover rounded-lg"
+              className="absolute inset-0 w-full h-full object-contain rounded-lg"
             />
           </div>
         </div>

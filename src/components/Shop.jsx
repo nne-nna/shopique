@@ -4,7 +4,7 @@ import { ShopContext } from '../context/ShopContext';
 import ProductItem from './ProductItem';
 import { Heart } from 'lucide-react';
 
-const TopDeals = () => {
+const Shop = () => {
     const { products } = useContext(ShopContext);
     const location = useLocation(); // Get location object
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -41,8 +41,8 @@ const TopDeals = () => {
     return (
         <div className='max-w-[1200px] mx-auto px-4 py-16'>
             <div className='mb-10'>
-                <h1 className='text-3xl md:text-4xl font-semibold mb-3'>Today's Best Deals For You!</h1>
-                <p className='text-gray-600 text-lg'>Discover our specially curated deals just for you</p>
+                <h1 className='text-3xl md:text-4xl font-semibold mb-3'>Welcome to Our Shop!</h1>
+                <p className='text-gray-600 text-lg'>Explore a wide range of products tailored to your style and needs</p>
             </div>
 
             <div className='flex gap-4 mb-8 overflow-x-auto pb-2 no-scrollbar'>
@@ -87,4 +87,4 @@ const TopDeals = () => {
     );
 };
 
-export default TopDeals;
+export default Shop;
