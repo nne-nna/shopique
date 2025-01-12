@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Deals from './pages/Deals'
 import NewsLetterBox from './components/NewsLetterBox'
-import './app.css'
+import './App.css'
 
 
 const App = () => {
