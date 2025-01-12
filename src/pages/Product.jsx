@@ -76,7 +76,7 @@ const Product = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="flex items-center text-sm text-gray-500 mb-6">
-        <span>Home</span>
+        <span>Shop</span>
         <ChevronRight className="w-4 h-4 mx-2" />
         <span>{productData.category}</span>
         <ChevronRight className="w-4 h-4 mx-2" />
