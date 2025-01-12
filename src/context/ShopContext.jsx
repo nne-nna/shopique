@@ -10,9 +10,12 @@ const ShopContextProvider = (props) => {
     const delivery_fee = 10;
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
-    const [cartItems, setCartItems] = useState({});
+    const [cartItems, setCartItems] = useState(() => {
+        // Initialize cart from localStorage if available
+        const savedCart = localStorage.getItem('cartItems');
+        return savedCart ? JSON.parse(savedCart) : {};
+    });
     
-    // New states for filtering and pagination
     const [currentCategory, setCurrentCategory] = useState('All');
     const [currentPage, setCurrentPage] = useState(1);
     const [filteredProducts, setFilteredProducts] = useState(products);
@@ -20,7 +23,11 @@ const ShopContextProvider = (props) => {
 
     const navigate = useNavigate();
 
-    // Filter products when category changes
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
+
     useEffect(() => {
         filterProducts(currentCategory);
     }, [currentCategory]);
@@ -31,70 +38,63 @@ const ShopContextProvider = (props) => {
             filtered = products.filter(item => item.category === category);
         }
         setFilteredProducts(filtered);
-        setCurrentPage(1); // Reset to first page when changing category
+        setCurrentPage(1);
     };
 
-    // Get current products for pagination
     const getCurrentProducts = () => {
         const indexOfLastProduct = currentPage * productsPerPage;
         const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
         return filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
     };
 
-    // Get total pages
     const getTotalPages = () => {
         return Math.ceil(filteredProducts.length / productsPerPage);
     };
 
-    // Existing cart functions
     const addToCart = async (itemId, size) => {
         try {
-            // Handle default size (for products without size options)
             if (size === 'default') {
-                let cartData = structuredClone(cartItems);
-                
-                if (cartData[itemId]) {
-                    cartData[itemId]['default'] = (cartData[itemId]['default'] || 0) + 1;
-                } else {
-                    cartData[itemId] = { default: 1 };
-                }
-                
-                setCartItems(cartData);
+                setCartItems(prev => {
+                    const updated = { ...prev };
+                    if (!updated[itemId]) {
+                        updated[itemId] = { default: 1 };
+                    } else {
+                        updated[itemId]['default'] = (updated[itemId]['default'] || 0) + 1;
+                    }
+                    return updated;
+                });
                 toast.success('Added to cart');
                 return;
             }
-    
-            // Handle products with size options
+
             if (!size) {
                 toast.error('Select Product Size');
                 return;
             }
-    
-            let cartData = structuredClone(cartItems);
-    
-            if (cartData[itemId]) {
-                cartData[itemId][size] = (cartData[itemId][size] || 0) + 1;
-            } else {
-                cartData[itemId] = { [size]: 1 };
-            }
+
+            setCartItems(prev => {
+                const updated = { ...prev };
+                if (!updated[itemId]) {
+                    updated[itemId] = { [size]: 1 };
+                } else {
+                    updated[itemId][size] = (updated[itemId][size] || 0) + 1;
+                }
+                return updated;
+            });
             
-            setCartItems(cartData);
             toast.success('Added to cart');
         } catch (error) {
             toast.error('Failed to add to cart');
             console.error('Add to cart error:', error);
         }
     }
+
     const getCartCount = () => {
         let totalCount = 0;
         for (const items in cartItems) {
             for (const item in cartItems[items]) {
-                try {
-                    if (cartItems[items][item] > 0) {
-                        totalCount += cartItems[items][item];
-                    }
-                } catch (error) {
-                    // Handle error
+                if (cartItems[items][item] > 0) {
+                    totalCount += cartItems[items][item];
                 }
             }
         }
@@ -102,26 +102,46 @@ const ShopContextProvider = (props) => {
     }
 
     const updateQuantity = async (itemId, size, quantity) => {
-        let cartData = structuredClone(cartItems);
-        cartData[itemId][size] = quantity;
-        setCartItems(cartData);
+        setCartItems(prev => {
+            const updated = { ...prev };
+            if (quantity <= 0) {
+                // Remove the size entry if quantity is 0
+                if (updated[itemId]) {
+                    delete updated[itemId][size];
+                    // Remove the item entirely if no sizes left
+                    if (Object.keys(updated[itemId]).length === 0) {
+                        delete updated[itemId];
+                    }
+                }
+            } else {
+                if (!updated[itemId]) {
+                    updated[itemId] = {};
+                }
+                updated[itemId][size] = quantity;
+            }
+            return updated;
+        });
     }
 
     const getCartAmount = () => {
         let totalAmount = 0;
         for (const items in cartItems) {
             let itemInfo = products.find((product) => product._id === items);
-            for (const item in cartItems[items]) {
-                try {
+            if (itemInfo) {
+                for (const item in cartItems[items]) {
                     if (cartItems[items][item] > 0) {
                         totalAmount += itemInfo.price * cartItems[items][item];
                     }
-                } catch (error) {
-                    // Handle error
                 }
             }
         }
         return totalAmount;
+    }
+
+    // Clear cart function (useful for after checkout)
+    const clearCart = () => {
+        setCartItems({});
+        localStorage.removeItem('cartItems');
     }
 
     const value = {
@@ -137,8 +157,8 @@ const ShopContextProvider = (props) => {
         getCartCount,
         updateQuantity,
         getCartAmount,
+        clearCart,
         navigate,
-        // New values for filtering and pagination
         currentCategory,
         setCurrentCategory,
         currentPage,
