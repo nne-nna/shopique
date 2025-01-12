@@ -1,29 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import SearchBar from "../context/SearchBar";
+import { X } from "lucide-react";
 
 const Nav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { getCartCount } = useContext(ShopContext);
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
     };
 
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
-    <div>
+    <nav>
       {/* Main Navbar */}
       <div
         className={`transition-all duration-300 ${
@@ -36,11 +46,11 @@ const Nav = () => {
           <div className="flex items-center gap-6">
             {/* Logo */}
             <Link to="/">
-              <img src={assets.logo} className="w-36" alt="Logo" />
+              <img src={assets.logo} className="w-28 sm:w-36" alt="Logo" />
             </Link>
 
-            {/* Nav Items */}
-            <ul className="hidden sm:flex gap-10 text-gray-700 items-center">
+            {/* Desktop Nav Items */}
+            <ul className="hidden lg:flex gap-10 text-gray-700 items-center">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -74,9 +84,9 @@ const Nav = () => {
             </ul>
           </div>
 
-          <div className="flex items-center gap-8">
-            {/* Search Bar */}
-            <div className="hidden sm:block">
+          <div className="flex items-center gap-4 sm:gap-8">
+            {/* Search Bar - Always visible */}
+            <div className="w-full max-w-xs">
               <SearchBar />
             </div>
 
@@ -93,77 +103,76 @@ const Nav = () => {
                 {getCartCount()}
               </p>
             </Link>
-            <img
-              onClick={() => setVisible(true)}
-              src={assets.menu_icon}
-              className="w-5 cursor-pointer sm:hidden"
-              alt="Menu"
-            />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="lg:hidden"
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6 text-gray-700" />
+              ) : (
+                <img
+                  src={assets.menu_icon}
+                  className="w-5 cursor-pointer"
+                  alt="Menu"
+                />
+              )}
+            </button>
           </div>
         </div>
-      </div>
 
-      {/* Sidebar Menu */}
-      <div
-        className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${
-          visible ? "w-full" : "w-0"
-        }`}
-      >
-        <div className="flex flex-col text-gray-600">
-          <div
-            onClick={() => setVisible(false)}
-            className="flex items-center gap-4 p-3 cursor-pointer"
-          >
-            <img className="h-4 rotate-180" src={assets.dropdown_icon} alt="" />
-            <p>Back</p>
+        {/* Mobile Menu Dropdown */}
+        <div
+          ref={menuRef}
+          className={`lg:hidden absolute w-full bg-white shadow-lg transition-all duration-300 z-50 ${
+            isMenuOpen
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 -translate-y-4 pointer-events-none"
+          }`}
+        >
+          <div className="py-4 px-6 space-y-4">
+            <NavLink
+              to="/"
+              onClick={() => setIsMenuOpen(false)}
+              className={({ isActive }) =>
+                `block py-2 px-4 rounded-md transition-colors ${
+                  isActive
+                    ? "bg-green-800 text-white"
+                    : "text-gray-700 hover:bg-green-50"
+                }`
+              }
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/deals"
+              onClick={() => setIsMenuOpen(false)}
+              className={({ isActive }) =>
+                `block py-2 px-4 rounded-md transition-colors ${
+                  isActive
+                    ? "bg-green-800 text-white"
+                    : "text-gray-700 hover:bg-green-50"
+                }`
+              }
+            >
+              Shop
+            </NavLink>
+            <NavLink
+              to="/place-order"
+              onClick={() => setIsMenuOpen(false)}
+              className={({ isActive }) =>
+                `block py-2 px-4 rounded-md transition-colors ${
+                  isActive
+                    ? "bg-green-800 text-white"
+                    : "text-gray-700 hover:bg-green-50"
+                }`
+              }
+            >
+              Delivery
+            </NavLink>
           </div>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center px-4 py-2 bg-green-800 text-white rounded-md"
-                  : "flex items-center hover:text-green-800"
-            }
-          >
-            Home
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/deals"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center px-4 py-2 bg-green-800 text-white rounded-md"
-                  : "flex items-center hover:text-green-800"
-            }
-          >
-            Deals
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/whats-new"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center px-4 py-2 bg-green-800 text-white rounded-md"
-                  : "flex items-center hover:text-green-800"
-            }
-          >
-            What's New
-          </NavLink>
-          <NavLink
-            onClick={() => setVisible(false)}
-            to="/delivery"
-            className={({ isActive }) =>
-              isActive
-                ? "py-2 pl-6 px-4 bg-orange-600 text-white rounded-md"
-                : "py-2 pl-6 hover:text-orange-600"
-            }
-          >
-            Delivery
-          </NavLink>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

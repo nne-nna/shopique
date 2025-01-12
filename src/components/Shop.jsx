@@ -41,7 +41,7 @@ const Shop = () => {
     return (
         <div className='max-w-[1200px] mx-auto px-4 py-16'>
             <div className='mb-10'>
-                <h1 className='text-3xl md:text-4xl font-semibold mb-3'>Welcome to Our Shop!</h1>
+                <h1 className='text-3xl md:text-4xl font-bold mb-3'>Curated Collections, Just For You!</h1>
                 <p className='text-gray-600 text-lg'>Explore a wide range of products tailored to your style and needs</p>
             </div>
 
