@@ -47,7 +47,7 @@ const SearchBar = () => {
         return productName.toLowerCase().includes(searchLower) ||
                productCategory.toLowerCase().includes(searchLower);
       })
-      .slice(0, 6); // Limit to 6 results
+      .slice(0, 6);
 
     setFilteredProducts(filtered);
     setShowDropdown(filtered.length > 0);

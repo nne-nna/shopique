@@ -234,7 +234,7 @@ const Product = () => {
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
-                          {/* Placeholder for user avatar */}
+                          {/* Placeholder for user avatar eventually... */}
                         </div>
                         <div>
                           <p className="font-medium">{review.userName}</p>

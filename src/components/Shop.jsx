@@ -67,7 +67,7 @@ const Shop = () => {
                         <div key={item._id} className='relative bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300'>
                             <button 
                                 className='absolute right-6 top-6 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-50'
-                                onClick={() => {/* Add wishlist functionality */}}
+                                onClick={() => {/* Add wishlist functionality eventually...*/}}
                             >
                                 <Heart className='w-4 h-4' />
                             </button>

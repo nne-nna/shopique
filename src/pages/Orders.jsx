@@ -6,7 +6,6 @@ const Orders = () => {
 
   const { products, currency, cartItems } = useContext(ShopContext);
 
-  // Extract items from cart and map them to product data
   const orderItems = [];
   for (const item in cartItems) {
     for (const size in cartItems[item]) {

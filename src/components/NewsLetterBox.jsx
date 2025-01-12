@@ -5,7 +5,7 @@ const NewsLetterBox = () => {
     return (
         <div className="bg-gray-100 py-8">
             <div className="max-w-[1200px] mx-auto px-6 flex flex-col lg:flex-row items-center gap-6">
-                {/* Left Section: Text + Input Box */}
+                {/* Left Section: Text and Input Box */}
                 <div className="flex-1">
                     <h2 className="text-2xl md:text-3xl font-bold text-black mb-3">
                         Stay Updated with Our Newsletter

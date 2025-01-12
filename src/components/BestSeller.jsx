@@ -4,7 +4,6 @@ import ProductItem from './ProductItem';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { TrendingUp } from 'lucide-react';
 
 const BestSeller = () => {
     const { products } = useContext(ShopContext);
@@ -14,7 +13,6 @@ const BestSeller = () => {
     useEffect(() => {
         const bestProduct = products.filter((item) => item.bestseller);
         setBestSeller(bestProduct.slice(0, 12));
-        // Set initialization after content is loaded
         setInitialized(true);
     }, [products]);
 
@@ -84,65 +82,7 @@ const BestSeller = () => {
                 {/* Enhanced Slider Section with initialization check */}
                 <div className='relative min-h-[400px]'> 
                     {initialized && bestSeller.length > 0 ? (
-                        <div className="slider-container">
-                            <style>
-                                {`
-                                    .slider-container {
-                                        visibility: ${initialized ? 'visible' : 'hidden'};
-                                    }
-                                    
-                                    .custom-dots {
-                                        display: flex !important;
-                                        justify-content: center;
-                                        align-items: center;
-                                        margin-top: 2rem;
-                                        gap: 8px;
-                                    }
-
-                                    .custom-dots li {
-                                        list-style: none;
-                                        cursor: pointer;
-                                        width: 80px;
-                                        height: 8px;
-                                    }
-
-                                    .custom-dots li button {
-                                        width: 100%;
-                                        height: 100%;
-                                        padding: 0;
-                                        border: none;
-                                        background: #e5e7eb;
-                                        border-radius: 4px;
-                                        text-indent: -9999px;
-                                        transition: all 0.3s ease;
-                                    }
-
-                                    .custom-dots li.slick-active button {
-                                        background: #166534;
-                                    }
-
-                                    .custom-dots li button:hover {
-                                        background: #166534;
-                                        opacity: 0.7;
-                                    }
-
-                                    .slick-slide {
-                                        visibility: hidden;
-                                    }
-
-                                    .slick-slide.slick-active {
-                                        visibility: visible;
-                                    }
-                                    
-                                    /* Force visibility for first slide on mobile */
-                                    @media (max-width: 768px) {
-                                        .slick-current {
-                                            visibility: visible !important;
-                                        }
-                                    }
-                                `}
-                            </style>
-
+                        <div className={`slider-container ${initialized ? 'visible' : 'invisible'}`}>
                             <Slider {...settings}>
                                 {bestSeller.map((item, index) => (
                                     <div key={index} className='px-2 sm:px-3'>
