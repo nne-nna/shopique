@@ -23,16 +23,16 @@ const BestSeller = () => {
         infinite: false,
         speed: 500,
         slidesToShow: 5,
-        slidesToScroll: 1, // Changed to 1 for smoother scrolling
-        arrows: true, // Enabled arrows for better navigation
+        slidesToScroll: 1, 
+        arrows: true, 
         dotsClass: "custom-dots",
         initialSlide: 0,
         lazyLoad: 'ondemand',
-        swipeToSlide: true, // Enables swipe/drag
+        swipeToSlide: true, 
         touchThreshold: 10,
         useCSS: true,
         useTransform: true,
-        waitForAnimate: false, // Prevents waiting for animation to complete
+        waitForAnimate: false, 
         responsive: [
             {
                 breakpoint: 1280,
@@ -68,7 +68,6 @@ const BestSeller = () => {
     return (
         <div className='relative bg-gradient-to-b from-white via-gray-50 to-white'>
             <div className='max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-                {/* Enhanced Header Section */}
                 <div className='mb-8 sm:mb-12 relative'>
                     <h1 className='text-3xl md:text-4xl font-semibold mb-4'>
                         Discover Our Best Sellers!
@@ -83,7 +82,7 @@ const BestSeller = () => {
                 </div>
 
                 {/* Enhanced Slider Section with initialization check */}
-                <div className='relative min-h-[400px]'> {/* Added min-height to prevent layout shift */}
+                <div className='relative min-h-[400px]'> 
                     {initialized && bestSeller.length > 0 ? (
                         <div className="slider-container">
                             <style>

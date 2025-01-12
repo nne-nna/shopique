@@ -4,12 +4,12 @@ import { ArrowDown } from 'lucide-react';
 
 const Banner = () => {
   return (
-    <div className="px-4 sm:px-6 md:px-8"> {/* Added outer padding for all screens */}
+    <div className="px-4 sm:px-6 md:px-8">
       <div className="w-full h-full max-w-7xl mx-auto rounded-lg relative overflow-hidden bg-green-800">
-        <div className="px-4 py-8 sm:py-12 md:py-16"> {/* Adjusted padding for better spacing */}
+        <div className="px-4 py-8 sm:py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
             {/* Text Content */}
-            <div className="text-white space-y-4 z-10 px-4 sm:px-6 md:px-8"> {/* Added padding to text container */}
+            <div className="text-white space-y-4 z-10 px-4 sm:px-6 md:px-8"> 
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
                 Shop the Latest Trends
               </h1>
@@ -26,7 +26,7 @@ const Banner = () => {
             </div>
 
             {/* Image */}
-            <div className="relative h-48 sm:h-56 md:h-72 mt-6 md:mt-0"> {/* Adjusted height for different screens */}
+            <div className="relative h-48 sm:h-56 md:h-72 mt-6 md:mt-0">
               <img 
                 src={assets.deals_banner} 
                 alt="Deals Banner" 

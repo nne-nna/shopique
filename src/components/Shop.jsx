@@ -17,7 +17,7 @@ const Shop = () => {
     // Use the category passed via location state
     useEffect(() => {
         if (location.state?.category) {
-            setCurrentCategory(location.state.category); // Set category based on passed state
+            setCurrentCategory(location.state.category);
         }
     }, [location.state]);
 

@@ -11,7 +11,7 @@ const ShopContextProvider = (props) => {
     const [search, setSearch] = useState('');
     const [showSearch, setShowSearch] = useState(false);
     const [cartItems, setCartItems] = useState(() => {
-        // Initialize cart from localStorage if available
+        // Initialize cart from localStorage
         const savedCart = localStorage.getItem('cartItems');
         return savedCart ? JSON.parse(savedCart) : {};
     });
@@ -138,7 +138,7 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     }
 
-    // Clear cart function (useful for after checkout)
+    // Clear cart function 
     const clearCart = () => {
         setCartItems({});
         localStorage.removeItem('cartItems');

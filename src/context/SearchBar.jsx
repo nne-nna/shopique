@@ -93,11 +93,11 @@ const SearchBar = () => {
                 className="flex items-center p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
               >
                 <img 
-                  src={product.image || assets.placeholder_image} // Add a placeholder image in your assets
+                  src={product.image || assets.placeholder_image}
                   alt={product.name}
                   className="w-10 h-10 object-cover rounded"
                   onError={(e) => {
-                    e.target.src = assets.placeholder_image; // Fallback for broken images
+                    e.target.src = assets.placeholder_image;
                   }}
                 />
                 <div className="ml-3">

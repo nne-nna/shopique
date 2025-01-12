@@ -20,7 +20,7 @@ const ProductItem = ({id, image, name, price, rating, purchases}) => {
                     className='absolute right-6 top-6 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-50'
                     onClick={(e) => {
                         e.preventDefault();
-                        // Add wishlist functionality
+
                     }}
                 >
                     <Heart className='w-4 h-4' />
